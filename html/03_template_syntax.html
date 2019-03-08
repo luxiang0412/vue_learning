@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title>template_syntax</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <span>message:{{msg}}</span><br>
+    <span v-once>message:{{msg}}</span>不会改变（使用了v-once）<br>
+    <button v-on:click="msg = 'change'">click</button>
+    <p>Using mustaches: {{ rawHtml }}</p>
+    <!--下面使用了v-html会将数据渲染成html标签 -->
+    <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+    <!-- 可以使用全局对象Math Date 等 -->
+    <p>{{Math.sqrt('15')}}</p>
+    <!-- 动态参数 -->
+    <!-- 缩写 -->
+    <a :href="url">baidu</a>
+
+    <button @click="out">click</button>
+</div>
+</body>
+<script type="text/javascript">
+    var out = 'sss';
+    var app = new Vue({
+        el:'#app',
+        data:{
+            msg:'hello',
+            rawHtml:'<span style="color:red;">this is red</span>',
+            url:'www.baidu.com'
+        },
+        methods:{
+           out:function(){
+               console.log('sssssssssss');
+           }
+        }
+    })
+</script>
+</html>

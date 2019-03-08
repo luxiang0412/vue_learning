@@ -1,0 +1,63 @@
+<html>
+<head>
+    <title>instance</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <p>{{foo}}</p>
+    <button v-on:click="foo = 'aaa'">click</button>
+    <div><img src="../image/lifecycle.png" alt="vue对象生命周期"></div>
+</div>
+</body>
+<script type="text/javascript">
+    var obj ={
+        foo:'bar'
+    }
+    //Object.freeze(obj);
+    //只有当实例被创建时 data 中存在的属性才是响应式的
+    var app = new Vue({
+        el:'#app',
+        data:obj,
+        methods:{
+           
+        },
+        //监听数据的变动  并执行方法
+        watch:{
+            foo:function(newValue,oldValue){
+                console.log(newValue);
+                console.log(oldValue);
+            }
+        },
+        beforeCreate:function(){
+            console.log('beforeCreate');
+        },
+        //创建vue对象的时候执行
+        created:function(){
+            console.log('created');
+        },
+        beforeMount:function(){
+            console.log('beforeMount');
+        },
+        //挂载
+        mounted:function(){
+            console.log('monuted');
+        },
+        beforeUpdate:function(){
+            console.log('beforeUpdate');
+        },
+        updated:function(){
+            console.log('updated');
+        },
+        beforeDestroy:function(){
+            console.log('beforeDestroy');
+        },
+        destroyed:function(){
+            console.log('destroyed');
+        }
+    })
+    //console.log(app.$el==document.getElementById('app'));
+    //console.log(app.$data==obj);
+    //console.log(app.$watch)
+</script>
+</html>

@@ -1,0 +1,56 @@
+<html>
+<head>
+    <title>introduction</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <span>{{message}}</span>
+    <p v-bind:title="message">鼠标悬停事件</p>
+    <span v-if="show">if show true  display</span>
+    <ul>
+       <li v-for="e in arr">{{e}}</li> 
+    </ul>
+
+    <p>{{message}}</p>
+    <button v-on:click="reversageMessage">点击</button>
+
+    <!-- 数据双向绑定 -->
+    <p>{{message}}</p>
+    <input v-model="message" type="text">
+
+    <ol>
+        <!-- 创建一个 todo-item 组件的实例 -->
+        <todo-item></todo-item>
+    </ol>
+
+    <ul>
+        <todo-item2 v-for="e in arr" v-bind:todo="e" v-bind:key="e"></todo-item2>
+    </ul>
+</div>
+</body>
+<script type="text/javascript">
+    Vue.component('todo-item', {
+        template: '<li>这是个待办项</li>'
+    })
+
+    Vue.component('todo-item2',{
+        props:['todo'],
+        template:'<li>{{todo}}</li>'
+    })
+    var app = new Vue({
+        el:'#app',
+        data:{
+            message:'hello,world!!!',
+            show:true,
+            arr:['one','two','three']
+        },
+        methods:{
+            reversageMessage:function(){
+                this.message = this.message.split('').reverse().join('')
+            }
+        }
+    })
+    
+</script>
+</html>
