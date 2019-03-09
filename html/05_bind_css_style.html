@@ -1,0 +1,49 @@
+<html>
+<head>
+    <title>bind_css_style</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style>
+    .red{
+        color: red;
+    }
+    .isred{
+        color: red;
+    }
+    .setWidth{
+        width: 1000px;
+        border: 1px green solid;
+    }
+</style>
+<body>
+<div id="app">
+    <p :class="{red:isred}">红色</p>
+
+    <p :class="classObj">红色 宽度</p>
+
+    <p :class="[{red:'isred'},classObj]">红色三</p>
+
+    <p :style="styleObj">green</p>
+</div>
+</body>
+<script type="text/javascript">
+    var app = new Vue({
+        el:'#app',
+        data:{
+            isred:true,
+            classObj:{
+                isred:true,
+                setWidth:true
+            },
+            styleObj:{
+                color:'green',
+                width:'500px',
+                border:'1px red solid'
+            }
+        },
+        methods:{
+           
+        }
+    })
+</script>
+</html>

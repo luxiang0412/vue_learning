@@ -1,0 +1,100 @@
+<html>
+<head>
+    <title>if_for_show</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+
+    <!-- 真正的消失 -->
+    <ul v-if="istrue" v-for="e in arr">
+        <li v-if="e.show" :key="e.id">{{e.name}}-{{e.sex}}</li>
+        <li v-else>not show</li>
+    </ul>
+
+    <!-- index item -->
+    <ol v-for="(e,index) in arr">
+        {{index}}<li :key="e.id">{{e.name}}</li>
+    </ol>
+    <!-- key value -->
+    <ul v-for="(key,value) in boj">
+        <li :key="key">{{key}}-----{{value}}</li>
+    </ul>
+    <!-- 只是隐藏起来了 -->
+    <p v-show="istrue">显示</p>
+    <button @click="hide()">隐藏</button>
+    <button @click="show()">显示</button>
+    <form v-on:submit.prevent="addNewTodo">
+        <label for="new-todo">Add a todo</label>
+        <input
+            v-model="newTodoText"
+            id="new-todo"
+            placeholder="E.g. Feed the cat"
+        >
+        <button>Add</button>
+    </form>
+    <ul v-for="(item,index) in arr">
+        <li is="todo-item" :key="item.id" :title="item.name" @remove="arr.splice(index, 1)">{{item.name}}</li>
+    </ul>
+</div>
+</body>
+<script type="text/javascript">
+    Vue.component('todo-item', {
+        template: '\
+            <li>\
+                {{ title }}\
+                <button v-on:click="$emit(\'remove\')">Remove</button>\
+            </li>\
+            ',
+        props: ['title']
+    })
+    var app = new Vue({
+        el:'#app',
+        data:{
+            nextTodoId:13,
+            newTodoText:'',
+            istrue:true,
+            isfalse:false,
+            boj:{
+                name:'lx',
+                id:10,
+                sex:'男',
+                show:true
+            },
+            arr:[{
+                name:'lx',
+                id:10,
+                sex:'男',
+                show:true
+            },{
+                name:'sf',
+                id:11,
+                sex:'男',
+                show:false
+            },{
+                name:'qs',
+                id:12,
+                sex:'女',
+                show:true
+            }]
+        },
+        methods:{
+           hide:function(){
+               this.istrue = false;
+           },
+           show:function(){
+               this.istrue = true;
+           },
+           addNewTodo: function () {
+                this.arr.push({
+                    id: this.nextTodoId++,
+                    name: this.newTodoText,
+                    sex:'女',
+                    show: true
+                })
+                this.newTodoText = ''
+            }
+        }
+    })
+</script>
+</html>
