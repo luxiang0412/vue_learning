@@ -5,17 +5,55 @@
 </head>
 <body>
 <div id="app">
-    
+    <!-- 监听事件 -->
+    <button @click="count += 1">add one</button>
+    <p>{{count}}</p>
+
+    <!-- 事件处理方法 -->
+    <button @click="event1">点击</button>
+
+    <!-- 事件修饰符 事件修饰符顺序不一样 结果也将不一样
+        其他一些事件修饰符例如：
+        stop[阻止单击事件继续传播] 
+        prevent[提交事件不再重载页面] 
+        capture[添加事件监听器时使用事件捕获模式
+        即元素自身触发的事件先在此处理，然后才交由内部元素进行处理] 
+        self[<只当在 event.target 是当前元素自身时触发处理函数
+        即事件不是从内部元素触发的]
+        once[只能执行点击一次] 
+        passive[滚动事件的默认行为 (即滚动行为) 将会立即触发，
+        而不会等待 `onScroll` 完成
+        这其中包含 `event.preventDefault()]
+
+     -->
+    <button @click.once="event1">只能点击一次</button>
+
+
+    <!-- 按键修饰符 -->
+    <input @keyup.enter="show()" v-model="content">
+
+    <input @keyup.alt.67="show()">
+
+    <!-- .exact修饰符 -->
+    <!--  只有当ctrl按下的点击才有效 -->
+    <button @click.ctrl.exact="show()">click</button>
+
 </div>
 </body>
 <script type="text/javascript">
     var app = new Vue({
         el:'#app',
         data:{
-            
+           count:0 ,
+           content:''
         },
         methods:{
-           
+           event1:function(e){
+                alert(e.target.tagName);
+           },
+           show:function(){
+                alert(this.content);
+           }
         }
     })
 </script>
