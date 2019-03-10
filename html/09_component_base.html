@@ -1,0 +1,107 @@
+<html>
+<head>
+    <title>component_base</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <div :style="{fontSize : postFontSize + 'em'}">
+        <!-- component 中的data 一定是一个function -->
+        <button-counter title="title"></button-counter>
+        <blog-post post="post" v-on:enlarge-text="postFontSize += $event"></blog-post>
+
+
+        <!-- 监听子事件 -->
+    </div>
+
+
+    <div>
+        <!-- 组件 v-model -->
+        <comp-model :value="compModel" @input="compModel = $event"></comp-model>
+        <!-- 同上 -->
+        <comp-model v-model="compModel"></comp-model>
+
+        <input v-model="compModel">
+        <input :value="compModel" @input="compModel = $event.target.value">
+    </div>
+    <!-- 插槽  slot标签内的内容为  模板中的内容 -->
+    <div>
+        <alert-box>slot</alert-box>
+    </div>
+
+
+    <!-- 动态组件 -->
+    <div>
+            <component v-bind:is="currentTabComponent"></component>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    Vue.component('alert-box',{
+        template:`
+        <div class="demo-alert-box">
+            <strong>Error</strong>
+            <slot></slot>
+        </div>
+        `
+    })
+    Vue.component('alert-box2',{
+        template:`
+        <div class="demo-alert-box">
+            <strong>Error2</strong>
+            <slot></slot>
+        </div>
+        `
+    })
+    Vue.component('comp-model',{
+        props:['value'],
+        template:`
+            <input :value="value" @input="$emit('input',$event.target.value)">
+        `
+    })
+    /* 组件中的template  必须只有一个根元素 下面button-counter中  如果不用div包起来  会报错*/
+    Vue.component('button-counter',{
+        data:function(){
+            return {
+                count:0
+            }
+        },
+        props:['title'],
+        template:`
+        <div>
+            <h3>{{title}}</h3>
+            <button @click="count++">{{count}}</button>
+        </div>
+        `
+    })
+    Vue.component('blog-post',{
+        props:['post'],
+        template:`
+        <div class="blog-post">
+            <h3>{{ post.title }}</h3>
+            <button v-on:click="$emit('enlarge-text',0.1)">
+                Enlarge text
+            </button>
+            <div v-html="post.content"></div>
+        </div>
+        `
+    })
+    var app = new Vue({
+        el:'#app',
+        data:{
+            title:'h3标题',
+            post:{
+                title:'luxiang',
+                content:'body..........'
+            },
+            postFontSize:1,
+            compModel:'',
+            count1:1,
+            currentTabComponent:'alert-box'
+        },
+        methods:{
+           
+        }
+    })
+</script>
+</html>
